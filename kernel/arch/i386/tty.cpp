@@ -6,7 +6,7 @@
 #include <stdint-gcc.h>
 #include <string.h>
 
-#include <kernel/dev/tty.h>
+#include <kernel/include/tty.h>
 
 #include "vga.h"
 
