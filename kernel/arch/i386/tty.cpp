@@ -1,4 +1,4 @@
-// TTY driver implementation (x86-64) for the Tinuk kernel
+// TTY driver implementation (i368) for the Tinuk kernel
 // Copyright (c) 2019 Skipper1931
 
 #include <stdbool.h>
