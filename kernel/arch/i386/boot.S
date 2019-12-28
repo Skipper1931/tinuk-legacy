@@ -30,7 +30,7 @@ _start:
 	call _init
 
 	# Transfer control to the main kernel.
-	call _Z5kmainv
+	call kmain
 
 	# Hang if kmain unexpectedly returns.
 

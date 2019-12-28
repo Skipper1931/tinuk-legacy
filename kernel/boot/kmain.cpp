@@ -5,9 +5,13 @@
 #include <kernel/dev/tty.h>
 #include <stack.h>
 
-void kmain(void) {
-	tty_init();
-	printf("\n");
+extern "C"
+{
+	void kmain(void)
+	{
+		tty_init();
+		printf("\n");
 
-	printf("Hello, kernel World!\n");
+		printf("Hello, kernel World!\n");
+	}
 }
