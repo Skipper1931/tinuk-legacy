@@ -33,34 +33,10 @@ _start:
 	call kmain
 
 	# Hang if kmain unexpectedly returns.
-
 	cli
 	hlt
-
-	#call func
-	#jmp 0x800f12
 	
 failsafe:
 	jmp failsafe
-
-func:
-	pushl %ebp
-	movl %esp, %ebp
-	subl $20, %esp
-
-	movl %esp, %eax
-	movl %esp, %ebx
-	subl $8, %eax
-	subl $16, %ebx
-
-	movl $12, (%eax)
-	movl $8, (%ebx)
-
-	movl (%eax), %ecx
-	movl (%ebx), %edx
-
-	addl %edx, %ecx
-	ret
-
 
 .size _start, . - _start
