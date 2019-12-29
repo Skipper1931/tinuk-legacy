@@ -1,5 +1,4 @@
-// TTY driver implementation (i386) for the Tinuk kernel
-// Copyright (c) 2019 Skipper1931
+// TTY driver implementation (VGA Text Mode, i386) for the Tinuk kernel
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -34,7 +33,7 @@ void tty_init(void)
 		}
 	}
 
-	tty_writestring("Initialized TTY driver\n");
+	tty_write("Initialized TTY driver\n");
 }
 
 void tty_setcolor(uint8_t color)
@@ -77,11 +76,9 @@ void tty_putchar(char c)
 
 void tty_write(const char *data, size_t size)
 {
+	if (size == 0) // allows user to do tty_write(string) without having to specify length themselves
+		size = strlen(data);
+
 	for (size_t i = 0; i < size; i++)
 		tty_putchar(data[i]);
-}
-
-void tty_writestring(const char *data)
-{
-	tty_write(data, strlen(data));
 }
