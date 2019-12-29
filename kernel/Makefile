@@ -59,7 +59,7 @@ tinuk.kernel: $(OBJS) $(ARCHDIR)/linker.ld
 $(ARCHDIR)/crtbegin.o $(ARCHDIR)/crtend.o:
 	OBJ=`$(CXX) $(CFLAGS) $(LDFLAGS) -print-file-name=$(@F)` && cp "$$OBJ" $@
  
-.c.o:
+.cpp.o:
 	$(CXX) -MD -c $< -o $@ -std=gnu11 $(CFLAGS) $(CPPFLAGS)
  
 .S.o:
