@@ -8,4 +8,4 @@ fi
 
 qemu-system-$(./target-triplet-to-arch.sh $HOST) -cdrom tinuk.iso -d guest_errors -s $QEMUCurses
 
-./clean.sh
+#./clean.sh
