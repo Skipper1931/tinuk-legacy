@@ -26,6 +26,10 @@ stack_top:
 _start:
 	movl $stack_top, %esp
 
+	# Put multiboot memory info from GRUB onto stack for kmain
+	push %eax
+	push %ebx
+
 	# Call the global constructors.
 	call _init
 
