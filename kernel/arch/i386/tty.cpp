@@ -9,12 +9,12 @@
 
 #include "vga.h"
 
-static const size_t VGA_WIDTH = 80;
-static const size_t VGA_HEIGHT = 25;
+static const uint8_t VGA_WIDTH = 80;
+static const uint8_t VGA_HEIGHT = 25;
 static uint16_t *const VGA_MEMORY = (uint16_t *)0xB8000;
 
-static size_t tty_row;
-static size_t tty_column;
+static uint8_t tty_row;
+static uint8_t tty_column;
 static uint8_t tty_color;
 static uint16_t *tty_buffer;
 
@@ -43,7 +43,7 @@ void tty_setcolor(uint8_t color)
 
 void tty_scroll()
 {
-
+	// TODO: Implement
 }
 
 void tty_putentryat(unsigned char c, uint8_t color, size_t x, size_t y)
@@ -60,6 +60,16 @@ void tty_putchar(char c)
 	{
 		tty_row++;
 		tty_column = 0;
+	}
+	else if (uc == '\t')
+	{
+		tty_column += 8;
+
+		if (tty_column >= VGA_WIDTH)
+		{
+			tty_row++;
+			tty_column = 0;
+		}
 	}
 	else
 	{
