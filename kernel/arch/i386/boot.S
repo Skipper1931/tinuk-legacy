@@ -26,7 +26,7 @@ stack_top:
 _start:
 	movl $stack_top, %esp
 
-	# Put multiboot memory info from GRUB onto stack for kmain
+	# Put multiboot info struct and magic num (both from GRUB) onto stack for kmain
 	push %eax
 	push %ebx
 
@@ -38,9 +38,9 @@ _start:
 
 	# Hang if kmain unexpectedly returns.
 	cli
+hang:
 	hlt
-	
-failsafe:
-	jmp failsafe
+	jmp hang
+
 
 .size _start, . - _start
