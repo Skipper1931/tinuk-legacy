@@ -22,14 +22,18 @@ extern "C"
 		}
 		if (!get_mbi_flag(mb_info, 6)) {
 			printf("ERROR: GRUB mmap not present\n");
+			return;
 		}
 
 		multiboot_memory_map_t* mmap = (multiboot_memory_map_t*)mb_info->mmap_addr;
 		while ((unsigned int)mmap < mb_info->mmap_addr + mb_info->mmap_length) {
-			printf("That's a map!\n");
+			printf("Addr: 0x%llx   ", mmap->addr);
+			printf("Length: 0x%llx  ", mmap->len);
+			printf("Type: 0x%x", mmap->type);
+			printf("\n");
 
 			mmap = (multiboot_memory_map_t*) ((unsigned int)mmap + (mmap->size + 4)); // mmap->size doesn't take itself into account so it (32-bit so 4 bytes) needs to be added
 		}
-		printf("That's all folks!!");
+		printf("That's all folks!!\n");
 	}
 }
