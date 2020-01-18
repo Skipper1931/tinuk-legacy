@@ -13,22 +13,23 @@ bool get_mbi_flag(multiboot_info_t* mbi, uint8_t bit) {
 extern "C"
 {
 	void kmain(multiboot_info_t* mb_info, unsigned int mb_magic)
-	{
-		if (mb_magic != MULTIBOOT_BOOTLOADER_MAGIC) return; // magic value put by GRUB isn't valid, thus something went wrong
-		
+	{		
 		tty_init();
 
-		printf("\n");
-		printf("Hello, kernel World!\n");
-
-		if (get_mbi_flag(mb_info, 6)) printf("true"); else printf("false");
-		printf("\n");
+		if (mb_magic != MULTIBOOT_BOOTLOADER_MAGIC) { // magic value put by GRUB isn't valid, thus something went wrong
+			printf("ERROR: Invalid GRUB Magic Value\n");
+			return;
+		}
+		if (!get_mbi_flag(mb_info, 6)) {
+			printf("ERROR: GRUB mmap not present\n");
+		}
 
 		multiboot_memory_map_t* mmap = (multiboot_memory_map_t*)mb_info->mmap_addr;
-		while (mmap < (multiboot_memory_map_t*)(mb_info->mmap_addr + mb_info->mmap_length)) {
-			multiboot_memory_map_t mmap_t = *mmap;
+		while ((int)mmap < mb_info->mmap_addr + mb_info->mmap_length) {
+			printf("That's a map!\n");
 
-			mmap = (multiboot_memory_map_t*) mmap + (mmap->size + 4); // mmap->size doesn't take itself into account so it (32-bit so 4 bytes) needs to be added
+			mmap = (multiboot_memory_map_t*) ((int)mmap + (mmap->size + 4)); // mmap->size doesn't take itself into account so it (32-bit so 4 bytes) needs to be added
 		}
+		printf("That's all folks!!");
 	}
 }
