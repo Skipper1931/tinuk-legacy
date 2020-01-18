@@ -1,3 +1,6 @@
+// Standard I/O Functions
+// Copyright (C) 2020 Skipper1931 (GPL-3.0 License)
+
 #ifndef _STDIO_H
 #define _STDIO_H 1
  

@@ -1,3 +1,6 @@
+// putchar() implementation for the Tinuk kernel
+// Copyright (C) 2020 Skipper1931 (GPL-3.0 License)
+
 #include <stdio.h>
  
 #if defined(__is_libk)

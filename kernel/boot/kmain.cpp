@@ -1,5 +1,5 @@
 // Entry point for the Tinuk kernel
-// Copyright (c) 2019 Skipper1931
+// Copyright (C) 2020 Skipper1931 (GPL-3.0 License)
 
 #include <stdint.h>
 #include <stdio.h>

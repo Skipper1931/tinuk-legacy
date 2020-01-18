@@ -1,3 +1,6 @@
+// printf() implementation for the Tinuk kernel
+// Copyright (C) 2020 Skipper1931 (GPL-3.0 License)
+
 #include <limits.h>
 #include <stdbool.h>
 #include <stdarg.h>
@@ -58,19 +61,9 @@ int printf(const char *__restrict format, ...)
 				return -1;
 			written++;
 		}
-		/*if (*format == 'i')
-		{
-			format++;
-			char c = va_arg(parameters, int);
-			if (!maxrem)
-			{
-				// TODO: Set errno to EOVERFLOW.
-				return -1;
-			}
-			if (!print(&c, sizeof(c)))
-				return -1;
-			written++;
-		}*/
+		else if (*format == 'x') {
+			
+		}
 		else if (*format == 's')
 		{
 			format++;

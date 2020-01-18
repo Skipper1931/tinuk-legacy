@@ -1,3 +1,6 @@
+// Contains a couple of helper functions and an enum for VGA Text Mode
+// Copyright (C) 2020 Skipper1931 (GPL-3.0 License)
+
 #ifndef ARCH_I386_VGA_H
 #define ARCH_I386_VGA_H
  

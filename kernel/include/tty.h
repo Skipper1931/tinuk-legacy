@@ -1,4 +1,6 @@
 // TTY driver header for the Tinuk kernel
+// These functions are implemented in ../arch/i386/tty.cpp (for IA-32)
+// Copyright (C) 2020 Skipper1931 (GPL-3.0 License)
 
 #ifndef _KERNEL_TTY_H
 #define _KERNEL_TTY_H

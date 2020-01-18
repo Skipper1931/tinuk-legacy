@@ -19,6 +19,10 @@
  *  IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+// This file came from https://www.gnu.org/software/grub/manual/multiboot/html_node/multiboot_002eh.html and 
+// contains a bunch of structs and stuff for GRUB/Multiboot. Everything here is from the original file other
+// than this comment.
+
 #ifndef MULTIBOOT_HEADER
 #define MULTIBOOT_HEADER 1
 

@@ -1,3 +1,6 @@
+// Misc std functions
+// Copyright (C) 2020 Skipper1931 (GPL-3.0 License)
+
 #ifndef _STDLIB_H
 #define _STDLIB_H 1
  

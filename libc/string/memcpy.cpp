@@ -1,3 +1,6 @@
+// memcpy() implementation for the Tinuk kernel
+// Copyright (C) 2020 Skipper1931 (GPL-3.0 License)
+
 #include <string.h>
  
 void* memcpy(void* __restrict dstptr, const void* __restrict srcptr, size_t size) {
