@@ -64,12 +64,15 @@ void tty_putchar(char c)
 	}
 	else if (uc == '\t')
 	{
-		tty_column += 8;
+		int offset = tty_column % 8;
+		if(offset == 0)
+			offset = 8;
+
+		tty_column += offset; // move to the next eigth offset into the row
 
 		if (tty_column >= VGA_WIDTH)
 		{
-			tty_row++;
-			tty_column = 0;
+			tty_column = VGA_WIDTH - 1;
 		}
 	}
 	else
