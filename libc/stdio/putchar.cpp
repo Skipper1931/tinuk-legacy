@@ -4,7 +4,7 @@
 #include <stdio.h>
  
 #if defined(__is_libk)
-#include <kernel/include/vga-txt.h>
+#include <kernel/vga-txt.h>
 #endif
  
 int putchar(int ic) {

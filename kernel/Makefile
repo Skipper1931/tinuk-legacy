@@ -74,8 +74,8 @@ clean:
 install: install-headers install-kernel
  
 install-headers:
-	mkdir -p $(DESTDIR)$(INCLUDEDIR)/kernel/include
-	cp -R --preserve=timestamps include/. $(DESTDIR)$(INCLUDEDIR)/kernel/include/.
+	mkdir -p $(DESTDIR)$(INCLUDEDIR)/kernel
+	cp -R --preserve=timestamps include/. $(DESTDIR)$(INCLUDEDIR)/kernel/.
  
 install-kernel: tinuk.kernel
 	mkdir -p $(DESTDIR)$(BOOTDIR)

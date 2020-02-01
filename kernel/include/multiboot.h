@@ -21,10 +21,15 @@
 
 // This file came from https://www.gnu.org/software/grub/manual/multiboot/html_node/multiboot_002eh.html and 
 // contains a bunch of structs and stuff for GRUB/Multiboot. Everything here is from the original file other
-// than this comment.
+// than this comment and the multiboot info classes.
 
 #ifndef MULTIBOOT_HEADER
 #define MULTIBOOT_HEADER 1
+
+/*class grub_mmap {
+	public:
+		grub_mmap();
+};*/
 
 /* How many bytes from the start of the file we search for the header. */
 #define MULTIBOOT_SEARCH                        8192

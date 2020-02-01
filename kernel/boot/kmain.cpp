@@ -3,8 +3,8 @@
 
 #include <stdint.h>
 #include <stdio.h>
-#include <kernel/include/vga-txt.h>
-#include <kernel/include/multiboot.h>
+#include <kernel/vga-txt.h>
+#include <kernel/multiboot.h>
 #include <kernel/panic.h>
 #include <string.h>
 

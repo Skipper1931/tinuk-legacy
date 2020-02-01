@@ -1,4 +1,4 @@
-#include <kernel/include/panic.h>
+#include <kernel/panic.h>
 #include <stdio.h>
 
 extern "C" void asm_kpanic(); // links the asm_kpanic func in arch/i386/boot.S to this
