@@ -26,6 +26,7 @@ extern "C"
 			return;
 		}
 
+		printf("\nGRUB Physical Memory Map:\n");
 		multiboot_memory_map_t* mmap = (multiboot_memory_map_t*)mb_info->mmap_addr;
 		while ((unsigned int)mmap < mb_info->mmap_addr + mb_info->mmap_length) {
 			printf("Addr: 0x%llx  ", mmap->addr);
@@ -58,6 +59,8 @@ extern "C"
 
 			mmap = (multiboot_memory_map_t*) ((unsigned int)mmap + (mmap->size + 4)); // mmap->size doesn't take itself into account so it (32-bit so 4 bytes) needs to be added
 		}
+		printf("\n");
+		
 		printf("That's all folks!!\n");
 	}
 }
