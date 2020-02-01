@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 #include <stdio.h>
-#include <kernel/include/tty.h>
+#include <kernel/include/vga-txt.h>
 #include <kernel/include/multiboot.h>
 #include <string.h>
 
@@ -15,7 +15,7 @@ extern "C"
 {
 	void kmain(multiboot_info_t* mb_info, unsigned int mb_magic)
 	{		
-		tty_init();
+		vga_txt_init();
 
 		if (mb_magic != MULTIBOOT_BOOTLOADER_MAGIC) { // magic value put by GRUB isn't valid, thus something went wrong
 			printf("ERROR: Invalid GRUB Magic Value\n");
