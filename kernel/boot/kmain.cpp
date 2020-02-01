@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <kernel/include/vga-txt.h>
 #include <kernel/include/multiboot.h>
+#include <kernel/panic.h>
 #include <string.h>
 
 bool get_mbi_flag(multiboot_info_t* mbi, uint8_t bit) {
