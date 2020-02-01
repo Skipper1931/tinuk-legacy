@@ -1,3 +1,6 @@
+// memmove() implementation for the Tinuk kernel
+// Copyright (C) 2020 Skipper1931 (GPL-3.0 License)
+
 #include <string.h>
  
 void* memmove(void* dstptr, const void* srcptr, size_t size) {

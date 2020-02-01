@@ -1,3 +1,6 @@
+// memcmp() implementation for the Tinuk kernel
+// Copyright (C) 2020 Skipper1931 (GPL-3.0 License)
+
 #include <string.h>
  
 int memcmp(const void* aptr, const void* bptr, size_t size) {

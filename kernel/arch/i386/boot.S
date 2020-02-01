@@ -22,9 +22,15 @@ stack_top:
 # The kernel entry point.
 .section .text
 .global _start
+.global asm_kpanic
 .type _start, @function
+.type asm_kpanic, @function
 _start:
 	movl $stack_top, %esp
+
+	# Put multiboot info struct and magic num (both from GRUB) onto stack for kmain
+	push %eax
+	push %ebx
 
 	# Call the global constructors.
 	call _init
@@ -32,35 +38,12 @@ _start:
 	# Transfer control to the main kernel.
 	call kmain
 
-	# Hang if kmain unexpectedly returns.
-
+asm_kpanic:
+	# Hang if kmain unexpectedly returns OR if we call kpanic.
 	cli
+hang:
 	hlt
-
-	#call func
-	#jmp 0x800f12
-	
-failsafe:
-	jmp failsafe
-
-func:
-	pushl %ebp
-	movl %esp, %ebp
-	subl $20, %esp
-
-	movl %esp, %eax
-	movl %esp, %ebx
-	subl $8, %eax
-	subl $16, %ebx
-
-	movl $12, (%eax)
-	movl $8, (%ebx)
-
-	movl (%eax), %ecx
-	movl (%ebx), %edx
-
-	addl %edx, %ecx
-	ret
+	jmp hang
 
 
 .size _start, . - _start

@@ -30,6 +30,7 @@ LIBS:=$(LIBS) $(KERNEL_ARCH_LIBS)
 KERNEL_OBJS=\
 $(KERNEL_ARCH_OBJS) \
 boot/kmain.o \
+kpanic.o \
  
 OBJS=\
 $(ARCHDIR)/crti.o \
@@ -59,7 +60,7 @@ tinuk.kernel: $(OBJS) $(ARCHDIR)/linker.ld
 $(ARCHDIR)/crtbegin.o $(ARCHDIR)/crtend.o:
 	OBJ=`$(CXX) $(CFLAGS) $(LDFLAGS) -print-file-name=$(@F)` && cp "$$OBJ" $@
  
-.c.o:
+.cpp.o:
 	$(CXX) -MD -c $< -o $@ -std=gnu11 $(CFLAGS) $(CPPFLAGS)
  
 .S.o:
@@ -73,8 +74,8 @@ clean:
 install: install-headers install-kernel
  
 install-headers:
-	mkdir -p $(DESTDIR)$(INCLUDEDIR)/kernel/include
-	cp -R --preserve=timestamps include/. $(DESTDIR)$(INCLUDEDIR)/kernel/include/.
+	mkdir -p $(DESTDIR)$(INCLUDEDIR)/kernel
+	cp -R --preserve=timestamps include/. $(DESTDIR)$(INCLUDEDIR)/kernel/.
  
 install-kernel: tinuk.kernel
 	mkdir -p $(DESTDIR)$(BOOTDIR)

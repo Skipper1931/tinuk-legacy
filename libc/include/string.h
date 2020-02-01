@@ -1,3 +1,6 @@
+// string.h
+// Copyright (C) 2020 Skipper1931 (GPL-3.0 License)
+
 #ifndef _STRING_H
 #define _STRING_H 1
  
