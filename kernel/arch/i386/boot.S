@@ -22,7 +22,9 @@ stack_top:
 # The kernel entry point.
 .section .text
 .global _start
+.global asm_kpanic
 .type _start, @function
+.type asm_kpanic, @function
 _start:
 	movl $stack_top, %esp
 
@@ -36,7 +38,8 @@ _start:
 	# Transfer control to the main kernel.
 	call kmain
 
-	# Hang if kmain unexpectedly returns.
+asm_kpanic:
+	# Hang if kmain unexpectedly returns OR if we call kpanic.
 	cli
 hang:
 	hlt
