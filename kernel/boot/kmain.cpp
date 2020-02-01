@@ -18,12 +18,10 @@ extern "C"
 		vga_txt_init();
 
 		if (mb_magic != MULTIBOOT_BOOTLOADER_MAGIC) { // magic value put by GRUB isn't valid, thus something went wrong
-			printf("ERROR: Invalid GRUB Magic Value\n");
-			return;
+			kpanic("Invalid GRUB Magic Value\n");
 		}
 		if (!get_mbi_flag(mb_info, 6)) {
-			printf("ERROR: GRUB mmap not present\n");
-			return;
+			kpanic("GRUB mmap not present\n");
 		}
 
 		printf("\nGRUB Physical Memory Map:\n");
