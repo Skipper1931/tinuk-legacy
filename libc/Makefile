@@ -1,8 +1,8 @@
 DEFAULT_HOST!=../default-host.sh
-HOST?=DEFAULT_HOST
+HOST?=$(DEFAULT_HOST)
 HOSTARCH!=../target-triplet-to-arch.sh $(HOST)
  
-CFLAGS?=-O2 -g -mno-red-zone
+CFLAGS?=-O2 -g
 CPPFLAGS?=
 LDFLAGS?=
 LIBS?=
@@ -13,7 +13,7 @@ EXEC_PREFIX?=$(PREFIX)
 INCLUDEDIR?=$(PREFIX)/include
 LIBDIR?=$(EXEC_PREFIX)/lib
  
-CFLAGS:=$(CFLAGS) -ffreestanding -Wall -Wextra
+CFLAGS:=$(CFLAGS) -ffreestanding -Wall -Wextra -mno-red-zone
 CPPFLAGS:=$(CPPFLAGS) -D__is_libc -Iinclude
 LIBK_CFLAGS:=$(CFLAGS)
 LIBK_CPPFLAGS:=$(CPPFLAGS) -D__is_libk
@@ -64,13 +64,13 @@ libk.a: $(LIBK_OBJS)
 	$(AR) rcs $@ $(LIBK_OBJS)
  
 .cpp.o:
-	$(CXX) -MD -c $< -o $@ -std=gnu11 $(CFLAGS) $(CPPFLAGS)
+	$(CXX) -MD -c $< -o $@ $(CFLAGS) $(CPPFLAGS)
  
 .cpp.S:
 	$(CXX) -MD -c $< -o $@ $(CFLAGS) $(CPPFLAGS)
  
 .cpp.libk.o:
-	$(CXX) -MD -c $< -o $@ -std=gnu11 $(LIBK_CFLAGS) $(LIBK_CPPFLAGS)
+	$(CXX) -MD -c $< -o $@ $(LIBK_CFLAGS) $(LIBK_CPPFLAGS)
  
 .S.libk.o:
 	$(CXX) -MD -c $< -o $@ $(LIBK_CFLAGS) $(LIBK_CPPFLAGS)

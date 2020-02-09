@@ -1,38 +1,46 @@
 /* The bootloader will look at this image and start execution at the symbol
    designated at the entry point. */
-ENTRY(_start)
+ENTRY(_start32)
+
+SEARCH_DIR(../sysroot/usr/lib/)
+
+KERNEL_LMA = 1M;
+KERNEL_VMA = 0xFFFF800000000000;
 
 /* Tell where the various sections of the object files will be put in the final
    kernel image. */
 SECTIONS
 {
-	/* Begin putting sections at 1 MiB, a conventional place for kernels to be
-	   loaded at by the bootloader. */
-	. = 1M;
+	/* Put the 32-bit bootstrap code at the 1MiB physical address. We'll later map the rest to kernel-space
+	   virtual memory */
+	. = KERNEL_LMA;
 
-	/* First put the multiboot header, as it is required to be put very early
-	   early in the image or the bootloader won't recognize the file format.
-	   Next we'll put the .text section. */
-	.text BLOCK(4K) : ALIGN(4K)
+	/*.boot ALIGN(4096): 
+	{
+	}
+
+	. += KERNEL_VMA;*/
+	
+	.text ALIGN(4096) : 
 	{
 		*(.multiboot)
 		*(.text)
 	}
 
 	/* Read-only data. */
-	.rodata BLOCK(4K) : ALIGN(4K)
+	.rodata ALIGN(4096) : 
 	{
 		*(.rodata)
 	}
 
 	/* Read-write data (initialized) */
-	.data BLOCK(4K) : ALIGN(4K)
+	.data ALIGN(4096) : 
 	{
 		*(.data)
 	}
 
 	/* Read-write data (uninitialized) and stack */
-	.bss BLOCK(4K) : ALIGN(4K)
+	.bss ALIGN(4096) : 
 	{
 		*(COMMON)
 		*(.bss)
