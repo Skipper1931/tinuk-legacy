@@ -50,7 +50,7 @@ $(ARCHDIR)/crtend.o
 
  
 .PHONY: all clean install install-headers install-kernel
-.SUFFIXES: .o .cpp .S .asm
+.SUFFIXES: .o .cpp .asm
  
 all: karyon.kernel
 
