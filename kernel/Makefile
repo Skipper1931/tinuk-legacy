@@ -30,6 +30,7 @@ LIBS:=$(LIBS) $(KERNEL_ARCH_LIBS)
 KERNEL_OBJS=\
 $(KERNEL_ARCH_OBJS) \
 boot/kmain.o \
+boot/multiboot.o \
 kpanic.o \
 
 OBJS=\
@@ -38,6 +39,7 @@ $(ARCHDIR)/crtbegin.o \
 $(KERNEL_OBJS) \
 $(ARCHDIR)/crtend.o \
 $(ARCHDIR)/crtn.o \
+$(LOADER_OBJS)
  
 LINK_LIST=\
 $(LDFLAGS) \
@@ -47,29 +49,36 @@ $(LIBS) \
 $(ARCHDIR)/crtn.o \
 $(ARCHDIR)/crtbegin.o \
 $(ARCHDIR)/crtend.o
-
  
 .PHONY: all clean install install-headers install-kernel
-.SUFFIXES: .o .cpp .asm
+.SUFFIXES: .o .cpp .asm .c .asm32
  
-all: karyon.kernel
+all: karyon.kernel loader32.elf
 
 karyon.kernel: $(OBJS) $(ARCHDIR)/linker.ld
 	$(CXX) -T $(ARCHDIR)/linker.ld -o $@ $(CFLAGS) -v $(LINK_LIST) -z max-page-size=4096
-	# check that the final binary is multiboot2-compliant
-	grub-file --is-x86-multiboot karyon.kernel
+
+loader32.elf: $(LOADER_OBJS) $(ARCHDIR)/bootstrap/linker.ld
+	~/opt/cross32/bin/i686-elf-gcc -T $(ARCHDIR)/bootstrap/linker.ld -o $@ $(CFLAGS) -v $(LOADER_OBJS) \
+	$(LDFLAGS) -nostdlib -lgcc -m32 -z max-page-size=4096
+	
+	# check that the final binary is multiboot-compliant
+	grub-file --is-x86-multiboot $@
  
 $(ARCHDIR)/crtbegin.o $(ARCHDIR)/crtend.o:
 	OBJ=`$(CXX) $(CFLAGS) $(LDFLAGS) -print-file-name=$(@F)` && cp "$$OBJ" $@
  
+.c.o:
+	$(CC) -MD -c $< -o $@ $(CFLAGS) -m32 -I $(SYSROOT)/usr/include
+
 .cpp.o:
-	$(CXX) -MD -c $< -o $@ $(CFLAGS) $(CPPFLAGS)
- 
-.S.o:
 	$(CXX) -MD -c $< -o $@ $(CFLAGS) $(CPPFLAGS)
 
 .asm.o:
 	nasm -f elf64 -g $< -o $@ -g
+
+.asm32.o:
+	nasm -f elf32 -g $< -o $@ -g
  
 clean:
 	rm -f karyon.kernel
@@ -82,8 +91,9 @@ install-headers:
 	mkdir -p $(DESTDIR)$(INCLUDEDIR)/kernel
 	cp -R --preserve=timestamps include/. $(DESTDIR)$(INCLUDEDIR)/kernel/.
  
-install-kernel: karyon.kernel
+install-kernel: karyon.kernel loader32.elf
 	mkdir -p $(DESTDIR)$(BOOTDIR)
 	cp karyon.kernel $(DESTDIR)$(BOOTDIR)
+	cp loader32.elf $(DESTDIR)$(BOOTDIR)
  
 -include $(OBJS:.o=.d)

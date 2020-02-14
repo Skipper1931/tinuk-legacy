@@ -8,21 +8,23 @@ EXTERN _init
 EXTERN kmain
 
 _start64:
-	; Put multiboot info struct and magic num (both from GRUB) onto stack for kmain
-	;push eax
-	;push ebx
-
-	xchg rax,rax
+	; Save multiboot info in case the constructors use them for some reason
+	push rsi
+	push rdi
 
 	; Call the global constructors.
-	call _init
+	lea rax, [rel _init]
+	call rax
 
+	pop rdi
+	pop rsi
 	; Transfer control to the main kernel.
-	call kmain
+	lea rax, [rel kmain]
+	call rax
 
 asm_kpanic:
 	; Hang if kmain unexpectedly returns OR if we call kpanic.
 	cli
-hang:
+.hang:
 	hlt
-	jmp hang
+	jmp .hang

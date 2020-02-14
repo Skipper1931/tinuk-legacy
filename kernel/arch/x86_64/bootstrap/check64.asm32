@@ -4,6 +4,7 @@ BITS 32
 
 SECTION .text
 GLOBAL check_64
+EXTERN no_64
 
 check_64:
     call check_cpuid
@@ -23,9 +24,10 @@ check_64:
     mov eax, 0x1
     ret
 .NoLongMode:
-    cli
+    call no_64
+.LP:cli
     hlt
-    jmp .NoLongMode
+    jmp .LP
 
 check_cpuid: 
     ; Check if CPUID is supported by attempting to flip the ID bit (bit 21) in

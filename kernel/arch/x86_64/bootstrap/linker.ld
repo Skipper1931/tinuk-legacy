@@ -1,36 +1,39 @@
 /* The bootloader will look at this image and start execution at the symbol
    designated at the entry point. */
-ENTRY(_start64)
+ENTRY(_start32)
 
-SEARCH_DIR(../sysroot/usr/lib/)
-
-KERNEL_ADDR = 0xFFFF800000000000;
+LOADER_ADDR = 1M;
 
 /* Tell where the various sections of the object files will be put in the final
-   kernel image. */
+   loader image. */
 SECTIONS
 {
-	. = 1M;
-	
-	.text ALIGN(4096) :
+	. = LOADER_ADDR;
+
+    .multiboot :
+    {
+        *(.multiboot)
+    }
+
+	.text :
 	{
-		*(.text)
+        *(.text)
 	}
 
 	/* Read-only data. */
-	.rodata ALIGN(4096) :
+	.rodata :
 	{
 		*(.rodata)
 	}
 
 	/* Read-write data (initialized) */
-	.data ALIGN(4096) :
+	.data :
 	{
 		*(.data)
 	}
 
 	/* Read-write data (uninitialized) and stack */
-	.bss ALIGN(4096) :
+	.bss :
 	{
 		*(COMMON)
 		*(.bss)
