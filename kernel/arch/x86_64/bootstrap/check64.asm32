@@ -25,9 +25,6 @@ check_64:
     ret
 .NoLongMode:
     call no_64
-.LP:cli
-    hlt
-    jmp .LP
 
 check_cpuid: 
     ; Check if CPUID is supported by attempting to flip the ID bit (bit 21) in

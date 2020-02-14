@@ -13,8 +13,8 @@ find sysroot/sys/src -type f -name "*.o" -delete
 
 cat > sysroot/boot/grub/grub.cfg << EOF
 menuentry "TinukOS" {
-	insmod /boot/karyon.kernel
 	multiboot /boot/loader32.elf
+	module /boot/karyon.kernel "KARYON_KERNEL"
 }
 EOF
 grub-mkrescue -o tinuk.iso sysroot

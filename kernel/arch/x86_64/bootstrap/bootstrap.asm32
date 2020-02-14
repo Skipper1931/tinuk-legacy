@@ -1,10 +1,10 @@
 BITS 32
 
 SECTION .bss
-resb 256
+resb 4096
 stack_top:
 
-SECTION .data
+SECTION .rodata
 gdt64:
     dq 0
 .code: equ $ - gdt64
@@ -17,15 +17,16 @@ gdt64:
 
 SECTION .text
 GLOBAL _start32
+GLOBAL asm_hang
 EXTERN trampoline_to_64
 EXTERN check_64
 EXTERN bootmain
 _start32:
+    cli
     mov esp, stack_top
-    mov esi, eax
-    mov edi, ebx
-
-    mov word [0xB8000], 0x0000
+    mov ebp, stack_top
+    push eax
+    push ebx
 
     call check_64
     call bootmain
@@ -60,6 +61,7 @@ _start32:
     jmp gdt64.code:trampoline_to_64 ; we need to jmp to 64-bit address while still in 32-bit mode, so instead we jump into a 32-bit address,
                                     ; which'll run in long mode, that will trampoline us to the real _start64
     %endif
+asm_hang:
     cli
 .lp:hlt
     jmp .lp
