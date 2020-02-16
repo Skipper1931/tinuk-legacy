@@ -12,8 +12,7 @@ _start64:
 	push rdi
 
 	; Call the global constructors.
-	lea rax, [rel _init]
-	call rax
+	; call _init
 
 	pop rdi
 	pop rsi

@@ -35,11 +35,11 @@ kpanic.o \
 
 OBJS=\
 $(ARCHDIR)/crti.o \
-$(ARCHDIR)/crtbegin.o \
 $(KERNEL_OBJS) \
-$(ARCHDIR)/crtend.o \
 $(ARCHDIR)/crtn.o \
-$(LOADER_OBJS)
+$(LOADER_OBJS) \
+#$(ARCHDIR)/crtbegin.o \
+$(ARCHDIR)/crtend.o
  
 LINK_LIST=\
 $(LDFLAGS) \
@@ -47,7 +47,7 @@ $(ARCHDIR)/crti.o \
 $(KERNEL_OBJS) \
 $(LIBS) \
 $(ARCHDIR)/crtn.o \
-$(ARCHDIR)/crtbegin.o \
+#$(ARCHDIR)/crtbegin.o \
 $(ARCHDIR)/crtend.o
  
 .PHONY: all clean install install-headers install-kernel
