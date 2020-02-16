@@ -5,3 +5,5 @@ sysroot/
 tinuk.iso
 tinuk.hsl
 tinuk.code-workspace
+
+kernel/loader32.elf
