@@ -36,13 +36,13 @@ It's actually possible to use GDB to debug something running in QEMU. To do this
 
 
 First we make the container
-```
-docker run -it --rm -v /src/tinuk/:/tinuk --name tinuk-debug tinuk-build-env ./qemu.sh
-```
+
+`docker run -it --rm -v /src/tinuk/:/tinuk --name tinuk-debug tinuk-build-env ./qemu.sh`
+
 Then, we open a new terminal and open a bash shell on the container we made
-```
-docker exec -it tinuk-debug /bin/bash
-```
+
+`docker exec -it tinuk-debug /bin/bash`
+
 These next commands are executed in the container bash shell we just made
 ```
 cd /tinuk
