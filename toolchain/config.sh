@@ -1,12 +1,15 @@
 SYSTEM_HEADER_PROJECTS="libc kernel"
 PROJECTS="libc kernel"
+cd /tinuk
+echo Starting config.sh
 
 export MAKE=${MAKE:-make}
-export HOST=${HOST:-$(./default-host.sh)}
+export HOST=${HOST:-$(toolchain/default-host.sh)}
  
 export AR=${HOST}-ar
 export AS=${HOST}-as
 export CXX=${HOST}-g++
+export LD=${HOST}-ld
  
 export PREFIX=/usr
 export EXEC_PREFIX=$PREFIX
@@ -26,3 +29,5 @@ export CXX="$CXX --sysroot=$SYSROOT"
 if echo "$HOST" | grep -Eq -- '-elf($|-)'; then
   export CXX="$CXX -isystem=$INCLUDEDIR"
 fi
+
+echo Finished config.sh

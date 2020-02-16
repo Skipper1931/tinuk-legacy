@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
-. ./build.sh
+cd /tinuk
+echo Starting iso.sh
+. toolchain/build.sh
  
 mkdir -p sysroot/boot/grub
 mkdir -p sysroot/sys/src
@@ -18,3 +20,5 @@ menuentry "TinukOS" {
 }
 EOF
 grub-mkrescue -o tinuk.iso sysroot
+
+echo Finished iso.sh
