@@ -4,7 +4,7 @@ FROM archlinux:20200205
 
 # Install packages
 RUN pacman -Sy
-RUN pacman -S --noconfirm tar binutils gcc make bison flex gmp mpc mpfr texinfo nasm grub xorriso qemu qemu-arch-extra mtools
+RUN pacman -S --noconfirm tar binutils gcc make bison flex gmp mpc mpfr texinfo nasm grub xorriso qemu qemu-arch-extra mtools gdb
 
 # Set up cross-compiler (32 and 64 bit). cross-compiler.tar.gz should have these two pre-compiled and should be in the
 # same folder as this Dockerfile. It's in the GitHub Repo so if you don't have it then check there. At some point
