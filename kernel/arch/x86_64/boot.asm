@@ -20,13 +20,3 @@ _start64:
 	lea rax, [rel kmain]
 	call rax
 
-
-SECTION .text
-GLOBAL asm_kpanic
-
-asm_kpanic:
-	; Hang if kmain unexpectedly returns OR if we call kpanic.
-	cli
-.hang:
-	hlt
-	jmp .hang
