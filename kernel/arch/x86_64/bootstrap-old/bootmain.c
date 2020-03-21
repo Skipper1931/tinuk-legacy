@@ -1,4 +1,8 @@
+// loader32.elf entrypoint
+// Copyright (C) 2020 Skipper1931 (GPL-3.0 License)
+
 #include "print.h"
+#include "loader.h" 
 #include <kernel/multiboot.h>
 #include <string.h>
 
@@ -10,21 +14,25 @@ void no_64() {
     asm_hang();
 }
 
-void bootmain(multiboot_info_t* mb_info, unsigned int mb_magic) {
+void bootmain(int huge_pages, multiboot_info_t* mb_info, unsigned int mb_magic) {
 
     print_clear();
-    print("Karyon Kernel Stage 2 Bootloader\n\n");
+    print("Stage 2 Bootloader (loader32.elf)\n\n");
 
     if(mb_magic != MULTIBOOT_BOOTLOADER_MAGIC) {
         print("ERROR: GRUB magic invalid\n");
         asm_hang();
     }
 
+    if(huge_pages == 0) {
+        print("WARNING: This CPU does not support 1GiB pages (pdpe1gb). This may cause crashes.");
+    }
+
     if (mb_info->flags & MULTIBOOT_INFO_MODS) {
         print("Searching for kernel amongst loaded modules...\n");
         for(int mod_num = 0; mod_num < mb_info->mods_count; mod_num++) {
             multiboot_module_t* mod = (multiboot_module_t*)(mb_info->mods_addr + (mod_num * sizeof(multiboot_module_t)));
-            print("Testing module ");
+            print("Checking module ");
             print(mod->cmdline);
             print("\n");
 

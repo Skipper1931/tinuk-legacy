@@ -18,22 +18,28 @@ gdt64:
 SECTION .text
 GLOBAL _start32
 GLOBAL asm_hang
-EXTERN trampoline_to_64
+GLOBAL enable_paging
 EXTERN check_64
 EXTERN bootmain
+EXTERN ptl4
 _start32:
     cli
     mov esp, stack_top
-    mov ebp, stack_top
+    mov ebp, esp
     push eax
     push ebx
 
     call check_64
+    push eax
+
     call bootmain
 
-    %ifdef COMMENT
+enable_paging:
     ; move page table address to cr3
+    mov eax, ptl4
     mov cr3, eax
+    mov edi, [eax + 4]
+    or edi, 0b11
 
     ; enable PAE
     mov eax, cr4
@@ -51,7 +57,10 @@ _start32:
     or eax, 1 << 31
     or eax, 1 << 16
     mov cr0, eax
+
+    ret
     
+    %ifdef COMMENT
     lgdt [gdt64.pointer]
     mov ax, gdt64.data
     mov ss, ax
