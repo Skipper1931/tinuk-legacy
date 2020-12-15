@@ -1,3 +1,5 @@
+# **THIS IS A LEGACY VERSION OF THE OS; CHECK SKIPPER1931/TINUK (ONCE IT EXISTS) FOR THE ACTUAL VERSION)**
+
 **Tinuk**
 
 *Please note that the most recent version of the kernel source is in the "develop" branch*
